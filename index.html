@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>TrueSkin</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700,700i&display=swap&subset=cyrillic" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+		  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+		  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="test"></div>
+<main class="overflow-hidden">
+<section id="section-1" class="section-1 section-top text-center">
+	<div class="wrapper">
+	<div class="apple relative">
+		<img src="img/apple.png" alt="" class="apple__img">
+		<img src="img/droplet.png" alt="" class="absolute droplet">
+		<img src="img/droplet-2.png" alt="" class="absolute droplet-2">
+		<img src="img/droplet-2.png" alt="" class="absolute droplet-3">
+	</div>
+	<h1 class="color-green title-1 zindex ">Проверь состояние<br /> своей кожи</h1>
+
+	<p class="section-1__text">Нейросеть TrueSkin проанализирует селфи и определит ваш возраст и состояние кожи лица. Получите <span class="color-green font-italic fw-700">профессиональные рекомендации</span> по уходу.</p>
+	<div class="enter-age">
+		<div class="age">
+			<div class="age__item text-right"><span class="color-green font-italic fw-700">Вам</span></div>
+			<div class="age__item">
+				<div class="age-input">
+				<input type="number" min="1" max="9" size="2" maxlength="2" name="age" pattern="\d*" class="age-input__value">
+				</div>
+			</div>
+			<div class="age__item text-left"><span class="color-green font-italic fw-700">лет</span></div>
+		</div>
+		<div id="age-text" style="display: none">Введите ваш возраст</div>
+		<button id="go-slide-2" class="btn relative">
+			<span class="zindex">Продолжить <img src="img/arrow.svg" alt=""></span>
+		</button>
+	</div>
+	</div>
+</section>
+<section id="section-2" class="section-2 text-center section-top" style="display: none">
+<div class="wrapper">
+<div class="relative">
+<h2 class="color-green title-1 zindex section-2__title">Как пользоваться приложением</h2>
+	<img src="img/apple_shape.png" alt="" class="shape-1">
+<nav>
+	<ul class="steps">
+		<li class="step">
+			<div class="step__int step__int_one">1</div>
+			<p>Встаньте в хорошо освещённом месте</p>
+		</li>
+		<li class="step">
+			<div class="step__int step__int_two">2</div>
+			<p>Поднесите камеру к лицу</p>
+		</li>
+		<li class="step">
+			<div class="step__int step__int_three">3</div>
+			<p>Нажмите на кнопку на экране</p>
+		</li>
+	</ul>
+	</nav>
+<img src="img/apple_shape.png" alt="" class="shape-2">
+</div>
+
+	<!--<input id="file" type="file" class="d-none" accept="image/*" capture="user">-->
+<button id="go-photo" class="btn relative">
+	<span class="zindex">Продолжить <img src="img/arrow.svg" alt=""></span>
+</button>
+</div>
+</section>
+<section id="camera" style="display: none">
+<div class="wrapper">
+<!-- Camera sensor -->
+<canvas id="camera__sensor" style="display: none"></canvas>
+
+<!-- Camera view -->
+<video id="camera__view" autoplay playsinline></video>
+
+<!-- Camera trigger -->
+<button id="camera__trigger" class="btn relative">
+	<span class="zindex">Сделать фото <img src="img/arrow.svg" alt=""></span>
+</button>
+<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+</section>
+<section id="section-3" class="section-3 section-top" style="display: none">
+<div class="wrapper">
+<div class="text-center zindex">
+	<div class="user-photo relative">
+		<!-- Camera output -->
+		<img id="camera-output" src="img/user.jpg" alt="">
+	</div>
+	</div>
+	<div class="section-3__text">
+	<div class="zindex face-result">
+		<div class="text-center">
+			<div class="face-result__title">Общее состояние кожи</div>
+			<div id="counter-age">
+				<div class="age">
+				<div class="age__item text-right"></div>
+				<div class="age__item">
+					<div class="age-input">
+						<div id="age" class="age-input__value">20</div>
+					</div>
+				</div>
+				<div class="age__item text-left"><span class="font-italic fw-700">лет</span></div>
+				</div>
+			</div>
+			<div class="balls">
+				<div id="ball-change" class="ball color-red">4</div>
+				<div class="ball">10</div>
+			</div>
+		<div class="progress-bar">
+			<div class="progress-bar__percent" style="width: 40%"></div>
+		</div>
+		<table class="table">
+		<tbody>
+		<tr class="table__item">
+		  <td>Морщины</td>
+		  <td>на 32% выше возрастной нормы</td>
+		</tr>
+		<tr class="table__item">
+		  <td>Возрастная пигментация</td>
+		  <td>присутствует</td>
+		</tr>
+		<tr class="table__item">
+		  <td>Носогубные складки</td>
+		  <td>выраженные, глубокие</td>
+		</tr>
+		<tr class="table__item">
+		  <td>Носослёзная борозда</td>
+		  <td>выражена</td>
+		</tr>
+		<tr class="table__item">
+		  <td>Овал лица</td>
+		  <td>нечёткий, не соответствует паспортному возрасту</td>
+		</tr>
+		<tr class="table__item">
+		  <td>Поры</td>
+		  <td>расширены</td>
+		</tr>
+		</tbody>
+		</table>
+</div>
+	<div class="text-center mb-40">
+	<div id="pulse-text" class="color-red title-3 d-none">состояние кожи не соответствует указанному возрасту</div>
+	</div>
+		<p>Вашей коже требуется профессиональный уход. Получите рекомендации по выбору эффективного косметического средства.</p>
+	</div>
+	</div>
+	<button id="go-slide-4" class="btn relative">
+	<span class="zindex">Получить рекомендации <img src="img/arrow.svg" alt=""></span>
+</button>
+</div>
+</section>
+<section id="section-4" class="section-3 section-top" style="display: none">
+<div class="wrapper">
+	<div class="section-4__title color-orange zindex">Мы проанализировали сосотояние вашей кожи и рекомендуем Goji Cream в качестве ежедневного ухода. </div>
+</div>
+<div class="product-bg">
+	<div class="wrapper">
+		<div class="relative">
+			<div class="product-img product-img_mini zindex">
+				<img src="img/product.png" alt="">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+<div class="zindex">
+<ul class="effects">
+	<li class="effect">
+		 <div class="effect__text">питает глубокие слои дермы</div>
+	</li>
+	<li class="effect">
+		 <div class="effect__text">разглаживает морщины</div>
+	</li>
+	<li class="effect">
+		<div class="effect__text">выравнивает цвет лица</div>
+	</li>
+	<li class="effect">
+		<div class="effect__text">нейтрализует последствия вредных привычек</div>
+	</li>
+</ul>
+<p>В состав крема входит экстракт ягод годжи. Активные компоненты проникают в глубокие слои кожи, стимулируют естественную регенерацию клеток и способствуют омоложению.</p>
+<p>Регулярное использование Goji Cream предотвращает появление необратимых возрастных изменений.</p>
+</div>
+</div>
+	</div>
+	<div class="statistics">
+	<div class="wrapper">
+		<div class="relative text-center statistics__content">
+			<div class="statistics-title uppercase relative">
+				<div class="statistics-title__first"><span class="zindex">Эффективность</span></div>
+				<div class="statistics-title__second"><span class="zindex">Goji Cream</span></div>
+			</div>
+			<div class="statistics-text">в цифрах</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+	<div class="text-center">
+		<div class="result__title"><span class="zindex">30–60 дней</span></div>
+		<div class="result__text">курс ежедневного использования Goji Cream (наносить 2 раза в день)</div>
+	</div>
+<div class="results">
+	<div class="result">
+	<div class="text-center">
+		<div class="result__img">
+		<div class="zindex"><img src="img/result.jpg" alt=""></div>
+		</div>
+		<div class="result__title"><span class="zindex">18–25 дней</span></div>
+		<div class="result__text">устранение глубоких морщин</div>
+	</div>
+	</div>
+	<div class="result">
+	<div class="text-center">
+		<div class="result__img"><div class="zindex"><img src="img/result-2.jpg" alt=""></div></div>
+		<div class="result__title"><span class="zindex">1–1,5 месяца</span></div>
+		<div class="result__text">подтяжка овала лица</div>
+	</div>
+	</div>
+	<div class="result">
+	<div class="text-center">
+		<div class="result__img"><div class="zindex"><img src="img/result-3.jpg" alt=""></div></div>
+		<div class="result__title"><span class="zindex">3–4 недели</span></div>
+		<div class="result__text">лечение купероза</div>
+	</div>
+	</div>
+	<div class="result">
+	<div class="text-center">
+		<div class="result__img"><div class="zindex"><img src="img/result-4.jpg" alt=""></div></div>
+		<div class="result__title"><span class="zindex">7–10 дней</span></div>
+		<div class="result__text">разглаживание мелких<br /> мимических морщин</div>
+	</div>
+	</div>
+</div>
+<div class="opinion relative">
+	<div class="opinion__title text-center">
+		<div class="opinion__title__first uppercase">
+			<span class="zindex">Мнение</span>
+			<div class="opinion__title__line"></div>
+		</div>
+		<div class="opinion__title__second">косметолога</div>
+	</div>
+	<div class="opinion__text">
+		<p class="zindex">На основании полученных TrueSkin результатов пользователям предлагаются профессиональные ухаживающие средства. Их эффективность сравнима с круговой подтяжкой лица. Раньше такого эффекта можно было добиться только в случае хирургического вмешательства. Профессиональный комплексный уход способствует омоложению и улучшению состояния кожи лица.</p>
+	</div>
+</div>
+<div class="doc">
+	<div class="doc__img d-inline-block">
+		<img src="img/doc.png" alt="">
+	</div>
+	<div class="doc__text d-inline-block">
+		<div class="doc__name"><span class="zindex">Милена Шмидт,</span></div> косметолог-
+	эстетист, врач высшей категории, директор клиники омоложения Luxury Queen Plaza.
+	</div>
+</div>
+<div class="opinion relative">
+	<div class="opinion__title text-center">
+		<div class="opinion__title__first uppercase">
+			<span class="zindex">Мнение</span>
+			<div class="opinion__title__line"></div>
+		</div>
+		<div class="opinion__title__second">разработчиков</div>
+	</div>
+	<div class="opinion__text">
+		<p class="zindex">Нейросеть TrueSkin - результат тесного сотрудничества косметологов, дерматологов и программистов. В процессе обучения роботов были выделены основные маркеры старения кожи. Приложение обработало более 10 000  фотографий, что позволило достичь высокой точности анализа.</p>
+	</div>
+</div>
+<div class="doc">
+	<div class="doc__img d-inline-block">
+		<img src="img/developer.png" alt="">
+	</div>
+	<div class="doc__text d-inline-block">
+		<div class="doc__name"><span class="zindex">Юджин Харрес,</span></div> создатель нейросети TrueSkin.
+	</div>
+</div>
+</div>
+<div class="order-bg relative">
+<div class="wrapper">
+	<p class="text-center fw-700 font-italic">По результатам тестирования предлагаем вам скидку 50% на первый заказ</p>
+	<form action="" id="form" class="form">
+		<select class="form__input form__input_select" id="country_code_selector" name="country_code">
+		  <option value="GB">United Kingdom</option>
+		</select>
+		<div class="form__item relative">
+			<label for="name">Имя</label>
+			<input id="name" class="form__input" name="name" placeholder="Имя" type="text" />
+		</div>
+		<div class="form__item relative">
+			<label for="phone">Телефон</label>
+			<input id="phone" class="form__input only_number" name="phone" placeholder="Телефон" type="text" />
+		</div>
+		<div class="footer-price text-center">
+			<div class="footer-price__old">{{ price }} {{ currency }}</div>
+			<div class="footer-price__new">{{ old_price }} {{ currency }}</div>
+		</div>
+		<button class="btn btn_order relative">
+			<span class="zindex">Заказать<br /> Goji Cream   <img src="img/arrow.svg" alt=""></span>
+		</button>
+	</form>
+</div>
+</div>
+</section>
+<section id="stub"><div class="wrapper">
+	<div class="stub-img"><img src="img/sorry.png" alt=""></div>
+	<div class="stub-content">Вы просматриваете сайт с компьютера. Для получения полноценных функций, пожалуйста, используйте телефон. Узнайте, соответствует ли ваш паспортный возраст биологическому и получите персональные рекомендации по уходу за кожей.</div>
+</div></section>
+<section id="bad-browser" style="display: none">
+<div class="wrapper">
+<div class="relative">
+<img src="img/apple_shape.png" alt="" class="shape-1">
+<div class="text-center">
+	<div class="bad-browser__img">
+		<img src="img/sorry.png" alt="">
+	</div>
+  <div class="title-1 bad-browser__title color-orange zindex">Ваш браузер не поддерживает весь функционал приложения</div>
+	<p>Попробуйте посетить сайт с другого браузера.</p>
+</div>
+<img src="img/apple_shape.png" alt="" class="shape-2">
+</div>
+</div>
+</section>
+</main>
+<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
